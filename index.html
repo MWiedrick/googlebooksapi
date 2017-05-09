@@ -42,6 +42,11 @@
 </head>
 
 <body>
+    <form action="index.html" method="get">
+        Search by ISBN (ISBN-10 or ISBN-13)
+        <input type=text name="isbn">
+        <button type="submit">Search for Book</button>
+    </form>
     <a href="index.html?isbn=0062225715">Mort</a>
     <a href="index.html?isbn=014200068X">Cannery Row</a>
     <a href="index.html?isbn=0451163966">One Flew Over the Cuckoo's Nest</a>
@@ -63,12 +68,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://www.googleapis.com/books/v1/volumes?q=the+hobbit", false);
+    var queryString = document.URL.substring(document.URL.indexOf('=') + 1);
+    xhr.open("GET", "https://www.googleapis.com/books/v1/volumes?q=isbn:" + queryString, false);
     xhr.send();
     console.log(xhr.status); // if this returns 200, then you are in like Flynn
     var bookObject = JSON.parse(xhr.responseText);
     console.log(bookObject);
-    $('body').css('background-image', 'url(' + bookObject.items[0].volumeInfo.imageLinks.thumbnail + ')');
     $('title').text(bookObject.items[0].volumeInfo.title);
     $('h1').text(bookObject.items[0].volumeInfo.title);
     $('h3').text(bookObject.items[0].volumeInfo.publishedDate);
