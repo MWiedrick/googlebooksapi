@@ -13,71 +13,89 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    
     <style>
-      h1,
-      h2,
-      h3 {
-        text-align: center;
-      }
-      h1 {
-        padding-top: 20px;
-      }
-      main {
-        background-color: rgba(255, 255, 255, .9);
-        border-radius: 15px;
-        padding: 20px;
-        width: 500px;
-        margin: 20px auto;
-        height: 500px;
-        color: #333;
-      }
-      .col:nth-of-type(1) {
-        float: left;
-        width: 40%;
-      }
-      .col:nth-of-type(2) {
-        float: right;
-        width: 60%;
-      }
-      img {
-        padding-left: 15px;
-      }
-      p {
-        font: 22px/1.33 serif;
+    /* Dropdown Button */
+        .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
 
-      }
+        /* Dropdown button on hover & focus */
+        .dropbtn:hover, .dropbtn:focus {
+            background-color: #3e8e41;
+        }
 
+        /* The container <div> - needed to position the dropdown content */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {background-color: #f1f1f1}
+
+        /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+        .show {display:block;}
     </style>
+
 </head>
 
 <body>
-    <form action="index.html" method="get">
+    
+<div class="jumbotron text-center">
+    <h1 class="text-center">Google Book Search via ISBN</h1>
+    <form action="index.html" method="get" class="text-center">
         Search by ISBN (ISBN-10 or ISBN-13)
         <input type=text name="isbn">
         <button type="submit">Search for Book</button>
     </form>
-    <a href="index.html?isbn=0062225715">Mort</a>
-    <a href="index.html?isbn=014200068X">Cannery Row</a>
-    <a href="index.html?isbn=0451163966">One Flew Over the Cuckoo's Nest</a>
-    <a href="index.html?isbn=0143039482">The Winter of Our Discontent</a>
-    <a href="index.html?isbn=0812550706">Ender's Game</a>
-    <br>
-    Google Books, Inc.
-    <br>
-    23423423 Broadway
-    <br>
-    Portland.
+    <div class="dropdown" style="margin-top:10px;">
+      <button onclick="myFunction()" class="dropbtn">A few of MY favorites</button>
+      <div id="myDropdown" class="dropdown-content">
+        <a href="index.html?isbn=0062225715">Mort</a>
+        <a href="index.html?isbn=014200068X">Cannery Row</a>
+        <a href="index.html?isbn=0451163966">One Flew Over the Cuckoo's Nest</a>
+        <a href="index.html?isbn=0143039482">The Winter of Our Discontent</a>
+        <a href="index.html?isbn=0812550706">Ender's Game</a>
+      </div>
+    </div>
+   
+</div>
     <main>
+        <div class="container text-center">
         <h1></h1>
-        <h3></h3>
-        <h2></h2>
-        <div class="col">
-          <img alt="Book Image">
+        <h3 style="margin-top:-5px;"></h3>
+        <h2 style="margin-top:-6px;"></h2>
+        
+        <img alt="Book Image" style="margin-bottom:20px;">
         </div>
-        <div class="col">
-          <p id="description"></p>
+        <div class="container" style="margin-bottom:100px;">
+            <p id="description"></p>
         </div>
+        
+        
     </main>
     <footer>
     </footer>
@@ -96,6 +114,27 @@
     $('h2').text(bookObject.items[0].volumeInfo.authors); 
     $('img').attr('src', bookObject.items[0].volumeInfo.imageLinks.smallThumbnail);
     $('#description').text(bookObject.items[0].volumeInfo.description);
+    
+    /* When the user clicks on the button, 
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
     </script>
 </body>
 
